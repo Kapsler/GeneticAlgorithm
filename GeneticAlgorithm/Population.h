@@ -1,8 +1,8 @@
 #pragma once
 #include <vector>
 #include "Genome.h"
-#include "RNGesus.h"
 #include <chrono>
+#include <map>
 
 namespace PopulationGlobals
 {
@@ -15,11 +15,13 @@ public:
 	Population(int numberOfGenomes);
 
 	void Evolve();
-	void Mutate();
+	void Print();
+	void PrintBestFitness();
+	bool HasFoundSolution();
+	Genome GetBestGenome();
 
 private:
 
-	RNGesus gesus;
-	std::vector<Genome> population;
+	std::multimap<int, Genome> population;
 
 };

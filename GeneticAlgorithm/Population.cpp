@@ -1,27 +1,66 @@
 #include "Population.h"
+#include <map>
+#include <functional>
+#include <set>
+#include "StaticXORShift.h"
+#include <algorithm>
 
 Population::Population(int numberOfGenomes)
 {
-	population.reserve(numberOfGenomes);
 
 	for (size_t i = 0u; i < numberOfGenomes; ++i)
 	{
-		population.push_back(Genome(gesus.GetIntInRange(-50, 50), gesus.GetIntInRange(-50, 50), gesus.GetIntInRange(-50, 50), gesus.GetIntInRange(-50, 50)));
+		Genome newGenome(StaticXorShift::GetIntInRange(-500, 500), StaticXorShift::GetIntInRange(-500, 500), StaticXorShift::GetIntInRange(-500, 500), StaticXorShift::GetIntInRange(-500, 500));
+		population.insert(std::pair<int, Genome>(newGenome.fitness, newGenome));
 	}
 }
 
 void Population::Evolve()
 {
-	for (Genome g : population) 
+	std::multimap<int, Genome> newPop;
+
+	for (auto it = population.begin(); it != population.end(); ++it) 
+	{	
+		const Genome& parent = it->second;
+
+		//1+1
+		Genome child = Genome::MutateOnePlusOne(parent);
+
+		if (child.fitness < parent.fitness)
+		{
+			newPop.insert(std::pair<int, Genome>(child.fitness, child));
+		} else
+		{
+			newPop.insert(std::pair<int, Genome>(parent.fitness, parent));
+		}
+	}
+
+	population = newPop;
+}
+
+void Population::Print()
+{
+	printf("\n\r### Printing Population ###\n\r");
+	for (auto it = population.begin(); it != population.end(); ++it)
 	{
-		g.PrintGenome(g);
-		printf("%d\n\r", Genome::CheckFitness(g));
-		printf("\n\r");
+		Genome::PrintGenome(it->second);
+		printf("%d\n\r", it->second.fitness);
 	}
 }
 
-void Population::Mutate()
+void Population::PrintBestFitness()
 {
-
+	printf("\n\r### Printing Best Fitness ###\n\r");
+	printf("%d\n\r", population.begin()->second.fitness);
 }
 
+bool Population::HasFoundSolution()
+{
+	return population.begin()->second.fitness == 0;
+}
+
+
+Genome Population::GetBestGenome()
+{
+	return population.begin()->second;
+}

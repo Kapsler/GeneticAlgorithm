@@ -21,9 +21,6 @@
     <ClCompile Include="Genome.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RNGesus.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Population.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -35,7 +32,7 @@
     <ClInclude Include="Population.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RNGesus.h">
+    <ClInclude Include="StaticXORShift.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -11,12 +11,20 @@ namespace genomeGlobals
 class Genome
 {
 public:
-	Genome(int x, int y, int a, int b);
 
+	bool operator() (const Genome& lhs, const Genome& rhs) const
+	{
+		return lhs.fitness < rhs.fitness;
+	}
+
+	Genome(int x, int y, int a, int b);
+	
 	static const int CheckFitness(Genome toCheck);
 	static const void PrintGenome(Genome toPrint);
+	static const Genome MutateOnePlusOne(const Genome& parent);
 
 	int genome[4];
+	int fitness;
 private:
 
 };							

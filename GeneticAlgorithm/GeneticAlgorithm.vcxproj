@@ -142,12 +142,11 @@
     <ClCompile Include="Genome.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Population.cpp" />
-    <ClCompile Include="RNGesus.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Genome.h" />
     <ClInclude Include="Population.h" />
-    <ClInclude Include="RNGesus.h" />
+    <ClInclude Include="StaticXORShift.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
