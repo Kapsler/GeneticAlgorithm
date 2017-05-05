@@ -1,6 +1,6 @@
 #include "Genome.h"
 
-Genome::Genome(float x, float y, float a, float b)
+Genome::Genome(int x, int y, int a, int b)
 {
 	genome[0] = x;
 	genome[1] = y;
@@ -8,30 +8,25 @@ Genome::Genome(float x, float y, float a, float b)
 	genome[3] = b;
 }
 
-const float Genome::CheckFitness(Genome toCheck)
+const int Genome::CheckFitness(Genome toCheck)
 {
-	float x = toCheck.genome[0];
-	float y = toCheck.genome[1];
-	float a = toCheck.genome[2];
-	float b = toCheck.genome[3];
+	int x = toCheck.genome[0];
+	int y = toCheck.genome[1];
+	int a = toCheck.genome[2];
+	int b = toCheck.genome[3];
 
 	//Is mandatory
 	if(b >= a)
 	{
-		return 1000;
+		return INT_MAX;
 	}
 	
 	float result = abs(((3 * pow(x, 2)) + (5 * pow(y, 3))) - 7 * a + 3 * pow(b, 2));
 
-	if (result < genomeGlobals::epsilon)
-	{
-		return 0;
-	}
-
-	return 1.0f * result;
+	return result;
 }
 
-const void Genome::PrintFitness(Genome toPrint)
+const void Genome::PrintGenome(Genome toPrint)
 {
-	printf("(<%f,%f,%f,%f>)", toPrint.genome[0], toPrint.genome[1], toPrint.genome[2], toPrint.genome[3]);
+	printf("(<%d,%d,%d,%d>)\n\r", toPrint.genome[0], toPrint.genome[1], toPrint.genome[2], toPrint.genome[3]);
 }

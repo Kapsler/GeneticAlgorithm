@@ -11,12 +11,12 @@ namespace genomeGlobals
 class Genome
 {
 public:
-	Genome(float x, float y, float a, float b);
+	Genome(int x, int y, int a, int b);
 
-	static const float CheckFitness(Genome toCheck);
-	static const void PrintFitness(Genome toPrint);
+	static const int CheckFitness(Genome toCheck);
+	static const void PrintGenome(Genome toPrint);
 
-	float genome[4];
+	int genome[4];
 private:
 
 };							
