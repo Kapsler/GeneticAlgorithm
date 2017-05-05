@@ -14,7 +14,15 @@ class Population
 public:
 	Population(int numberOfGenomes);
 
-	void Evolve();
+	//(1+1)
+	void EvolveOnePlusOne();
+
+	//(mü + lambda)
+	void EvolveMuPlusLambda(unsigned int l);
+
+
+
+	//Debug Stuff
 	void Print();
 	void PrintBestFitness();
 	bool HasFoundSolution();

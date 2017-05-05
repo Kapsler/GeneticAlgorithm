@@ -2,6 +2,11 @@
 #include "Population.h"
 #include "StaticXORShift.h"
 
+namespace config
+{
+	static const unsigned int MaxGenerations = 50000;
+}
+
 void main()
 {
 	size_t neededIterations = 0;
@@ -10,14 +15,14 @@ void main()
 	p.PrintBestFitness();
 	Genome::PrintGenome(p.GetBestGenome());
 	
-	for(neededIterations; neededIterations < 50000; ++neededIterations)
+	for(neededIterations; neededIterations < config::MaxGenerations; ++neededIterations)
 	{
 		if(p.HasFoundSolution())
 		{
 			break;
 		}
 
-		p.Evolve();
+		p.EvolveOnePlusOne();
 	}
 
 	p.PrintBestFitness();

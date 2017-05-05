@@ -14,7 +14,7 @@ public:
 
 	bool operator() (const Genome& lhs, const Genome& rhs) const
 	{
-		return lhs.fitness < rhs.fitness;
+		return (lhs.fitness < rhs.fitness);
 	}
 
 	Genome(int x, int y, int a, int b);

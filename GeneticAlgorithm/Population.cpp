@@ -15,7 +15,7 @@ Population::Population(int numberOfGenomes)
 	}
 }
 
-void Population::Evolve()
+void Population::EvolveOnePlusOne()
 {
 	std::multimap<int, Genome> newPop;
 
@@ -33,6 +33,22 @@ void Population::Evolve()
 		{
 			newPop.insert(std::pair<int, Genome>(parent.fitness, parent));
 		}
+	}
+
+	population = newPop;
+}
+
+void Population::EvolveMuPlusLambda(unsigned l)
+{
+	std::multiset<int, Genome> newPop;
+
+	for(size_t i = 0; i < l; ++i)
+	{
+		int randVal = StaticXorShift::GetIntInRange(0, population.size()-1);
+
+		const Genome& parent = ;
+
+		Genome child = Genome::MutateOnePlusOne(parent);
 	}
 
 	population = newPop;
