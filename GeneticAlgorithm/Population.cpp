@@ -68,7 +68,42 @@ void Population::EvolveMuPlusLambda(unsigned int u, unsigned int l)
 
 	population.clear();
 	population.insert(population.begin(), newPop.begin(), newPop.end());
+
+	
 	if(u < population.size())
+	{
+		population.erase(population.begin() + u, population.end());
+	}
+}
+
+void Population::EvolveMuCommaLambda(unsigned u, unsigned l)
+{
+	std::multiset<Genome, Genome> newPop;
+	std::vector<Genome> tmpPop = population;
+
+	for (size_t i = 0; i < l; ++i)
+	{
+		int randVal = StaticXorShift::GetIntInRange(0, population.size() - 1);
+
+		const Genome& parent = population[randVal];
+
+		Genome child = Genome::MutateOnePlusOne(parent);
+
+		newPop.insert(child);
+
+		//Erasing
+		population.erase(population.begin() + randVal);
+		if (population.size() == 0)
+		{
+			population = tmpPop;
+		}
+	}
+
+	population.clear();
+	population.insert(population.begin(), newPop.begin(), newPop.end());
+
+
+	if (u < population.size())
 	{
 		population.erase(population.begin() + u, population.end());
 	}

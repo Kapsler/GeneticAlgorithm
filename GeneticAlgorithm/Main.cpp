@@ -24,7 +24,9 @@ void main()
 		}
 
 		//p.EvolveOnePlusOne();
-		p.EvolveMuPlusLambda(config::ParentCount, config::ParentCount * 2);
+		//p.EvolveMuPlusLambda(config::ParentCount, config::ParentCount * 2);
+		p.EvolveMuCommaLambda(config::ParentCount, config::ParentCount * 2);
+
 	}
 
 	p.PrintBestFitness();

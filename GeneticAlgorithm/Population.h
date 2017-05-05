@@ -18,8 +18,11 @@ public:
 	//(1+1)
 	void EvolveOnePlusOne();
 
-	//(mü + lambda)
+	//(mü+lambda)
 	void EvolveMuPlusLambda(unsigned int u, unsigned int l);
+
+	//(mü,lambda)
+	void EvolveMuCommaLambda(unsigned int u, unsigned int l);
 
 
 

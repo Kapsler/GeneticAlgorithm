@@ -50,7 +50,7 @@ const Genome Genome::MutateOnePlusOne(const Genome& parent)
 	child.genome[1] += StaticXorShift::GetIntInRange(-5, 5);
 	child.genome[2] += StaticXorShift::GetIntInRange(-5, 5);
 	child.genome[3] += StaticXorShift::GetIntInRange(-5, 5);
-	child.fitness = Genome::CheckFitness(child);
+	child.fitness = CheckFitness(child);
 	
 	return child;
 }
