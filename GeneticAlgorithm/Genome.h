@@ -17,6 +17,7 @@ public:
 		return (lhs.fitness < rhs.fitness);
 	}
 
+	Genome();
 	Genome(int x, int y, int a, int b);
 	
 	static const int CheckFitness(Genome toCheck);

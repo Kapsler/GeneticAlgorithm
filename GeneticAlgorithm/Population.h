@@ -3,6 +3,7 @@
 #include "Genome.h"
 #include <chrono>
 #include <map>
+#include <set>
 
 namespace PopulationGlobals
 {
@@ -18,7 +19,7 @@ public:
 	void EvolveOnePlusOne();
 
 	//(mü + lambda)
-	void EvolveMuPlusLambda(unsigned int l);
+	void EvolveMuPlusLambda(unsigned int u, unsigned int l);
 
 
 
@@ -30,6 +31,6 @@ public:
 
 private:
 
-	std::multimap<int, Genome> population;
+	std::vector<Genome> population;
 
 };

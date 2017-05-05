@@ -5,12 +5,13 @@
 namespace config
 {
 	static const unsigned int MaxGenerations = 50000;
+	static const unsigned int ParentCount = 1000;
 }
 
 void main()
 {
 	size_t neededIterations = 0;
-	Population p(1000);
+	Population p(config::ParentCount);
 
 	p.PrintBestFitness();
 	Genome::PrintGenome(p.GetBestGenome());
@@ -22,7 +23,8 @@ void main()
 			break;
 		}
 
-		p.EvolveOnePlusOne();
+		//p.EvolveOnePlusOne();
+		p.EvolveMuPlusLambda(config::ParentCount, config::ParentCount * 2);
 	}
 
 	p.PrintBestFitness();

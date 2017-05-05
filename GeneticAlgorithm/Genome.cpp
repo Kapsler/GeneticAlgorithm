@@ -1,6 +1,15 @@
 #include "Genome.h"
 #include "StaticXORShift.h"
 
+Genome::Genome()
+{
+	genome[0] = 0;
+	genome[1] = 0;
+	genome[2] = 0;
+	genome[3] = 0;
+	fitness = CheckFitness(*this);
+}
+
 Genome::Genome(int x, int y, int a, int b)
 {
 	genome[0] = x;
