@@ -1,34 +1,22 @@
 #pragma once
-#include <cmath>
-#include <cstdio>
 #include <vector>
-
-namespace genomeGlobals
-{
-	static const float epsilon = 0.000001f;
-}
-
 
 class Genome
 {
 public:
+	Genome(){};
+	~Genome(){};
 
-	bool operator() (const Genome& lhs, const Genome& rhs) const
+	virtual bool operator() (const Genome* lhs, const Genome* rhs) const 
 	{
-		return (lhs.fitness < rhs.fitness);
+		return (lhs->fitness < rhs->fitness);
 	}
 
-	Genome();
-	Genome(int x, int y, int a, int b);
-	
-	static const int CheckFitness(Genome toCheck);
-	static const void PrintGenome(Genome toPrint);
-	static const Genome MutateOnePlusOne(const Genome& parent);
-	static const Genome Merge(std::vector<Genome> parents);
-	static const Genome Combine(std::vector<Genome> parents);
+	virtual const int CheckFitness() { return 0; }
+	virtual const void PrintGenome() { };
+	virtual Genome* MutateOnePlusOne() const { return nullptr; }
+	virtual Genome* Merge(std::vector<Genome*>& parents) const { return nullptr; };
+	virtual Genome* Combine(std::vector<Genome*>& parents) const { return nullptr; };
 
-	int genome[4];
 	int fitness;
-private:
-
-};							
+};

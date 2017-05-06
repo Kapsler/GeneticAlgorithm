@@ -18,21 +18,24 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Genome.cpp">
+    <ClCompile Include="Population.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Population.cpp">
+    <ClCompile Include="SolverGenome.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Genome.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Population.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="StaticXORShift.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SolverGenome.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Genome.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

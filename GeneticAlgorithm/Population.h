@@ -1,9 +1,11 @@
 #pragma once
 #include <vector>
-#include "Genome.h"
+#include "SolverGenome.h"
 #include <chrono>
 #include <map>
 #include <set>
+#include "Genome.h"
+#include <functional>
 
 namespace PopulationGlobals
 {
@@ -13,7 +15,7 @@ namespace PopulationGlobals
 class Population
 {
 public:
-	Population(int numberOfGenomes);
+	Population(std::vector<Genome*> newPop, std::function<bool(const Genome* lhs, const Genome* rhs)> pred);
 
 	//(1+1)
 	void EvolveOnePlusOne();
@@ -33,10 +35,10 @@ public:
 	void Print();
 	void PrintBestFitness();
 	bool HasFoundSolution();
-	Genome GetBestGenome();
+	Genome* GetBestGenome();
 
 private:
 
-	std::vector<Genome> population;
+	std::vector<Genome*> population;
 
 };
