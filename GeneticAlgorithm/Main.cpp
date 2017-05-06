@@ -1,11 +1,13 @@
 #include <cstdio>
 #include "Population.h"
 #include "StaticXORShift.h"
+#include <bitset>
 
 namespace config
 {
 	static const unsigned int MaxGenerations = 50000;
 	static const unsigned int ParentCount = 1000;
+	static const unsigned int ChildCount = ParentCount * 2;
 }
 
 void main()
@@ -24,9 +26,9 @@ void main()
 		}
 
 		//p.EvolveOnePlusOne();
-		//p.EvolveMuPlusLambda(config::ParentCount, config::ParentCount * 2);
-		p.EvolveMuCommaLambda(config::ParentCount, config::ParentCount * 2);
-
+		//p.EvolveMuPlusLambda(config::ParentCount, config::ChildCount);
+		//p.EvolveMuCommaLambda(config::ParentCount, config::ChildCount);
+		p.EvolveMuByPHashLambda(config::ParentCount, config::ChildCount, 2);
 	}
 
 	p.PrintBestFitness();

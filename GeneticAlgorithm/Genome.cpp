@@ -1,5 +1,6 @@
 #include "Genome.h"
 #include "StaticXORShift.h"
+#include <bitset>
 
 Genome::Genome()
 {
@@ -31,8 +32,8 @@ const int Genome::CheckFitness(Genome toCheck)
 	{
 		return INT_MAX;
 	}
-	
-	float result = abs(((3 * pow(x, 2)) + (5 * pow(y, 3))) - 7 * a + 3 * pow(b, 2));
+
+	int result = static_cast<int>(abs(3 * pow(x, 2) + 5 * pow(y, 3) - (7 * a + 3 * pow(b, 2))));
 
 	return result;
 }
@@ -52,5 +53,42 @@ const Genome Genome::MutateOnePlusOne(const Genome& parent)
 	child.genome[3] += StaticXorShift::GetIntInRange(-5, 5);
 	child.fitness = CheckFitness(child);
 	
+	return child;
+}
+
+const Genome Genome::Merge(std::vector<Genome> parents)
+{
+	int mergedX = 0;
+	int mergedY = 0;
+	int mergedA = 0;
+	int mergedB = 0;
+
+	for (Genome& p : parents)
+	{
+		mergedX += p.genome[0];
+		mergedY += p.genome[1];
+		mergedA += p.genome[2];
+		mergedB += p.genome[3];
+	}
+	Genome child;
+
+	child.genome[0] = static_cast<int>(mergedX) / parents.size();
+	child.genome[1] = static_cast<int>(mergedY) / parents.size();
+	child.genome[2] = static_cast<int>(mergedA) / parents.size();
+	child.genome[3] = static_cast<int>(mergedB) / parents.size();
+	child.fitness = CheckFitness(child);
+
+	return child;
+}
+
+const Genome Genome::Combine(std::vector<Genome> parents)
+{
+	Genome child;
+
+	for(size_t i = 0; i < 4; ++i)
+	{
+		child.genome[i] = parents[i%parents.size()].genome[i];
+	}
+
 	return child;
 }

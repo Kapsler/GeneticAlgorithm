@@ -49,7 +49,7 @@ void Population::EvolveMuPlusLambda(unsigned int u, unsigned int l)
 
 	for(size_t i = 0; i < l; ++i)
 	{
-		int randVal = StaticXorShift::GetIntInRange(0, population.size()-1);
+		size_t randVal = StaticXorShift::GetIntInRange(0, population.size()-1);
 
 		const Genome& parent = population[randVal];
 
@@ -83,26 +83,79 @@ void Population::EvolveMuCommaLambda(unsigned u, unsigned l)
 
 	for (size_t i = 0; i < l; ++i)
 	{
-		int randVal = StaticXorShift::GetIntInRange(0, population.size() - 1);
-
-		const Genome& parent = population[randVal];
-
-		Genome child = Genome::MutateOnePlusOne(parent);
-
-		newPop.insert(child);
-
-		//Erasing
-		population.erase(population.begin() + randVal);
+		//If all parents were chosen, start anew
 		if (population.size() == 0)
 		{
 			population = tmpPop;
 		}
+
+		//Choose Parent
+		size_t randVal = StaticXorShift::GetIntInRange(0, population.size() - 1);
+		const Genome& parent = population[randVal];//Erasing
+		population.erase(population.begin() + randVal);
+
+		//Mutate Child
+		Genome child = Genome::MutateOnePlusOne(parent);
+
+		//Add to Population
+		newPop.insert(child);
 	}
 
 	population.clear();
 	population.insert(population.begin(), newPop.begin(), newPop.end());
+	if (u < population.size())
+	{
+		population.erase(population.begin() + u, population.end());
+	}
+}
 
+void Population::EvolveMuByPHashLambda(unsigned u, unsigned l, unsigned p)
+{
+	std::multiset<Genome, Genome> newPop;
+	std::vector<Genome> tmpPop = population;
 
+	for (size_t i = 0; i < l; ++i)
+	{
+		//If all parents were chosen, start anew
+		if (population.size() == 0)
+		{
+			population = tmpPop;
+		}
+
+		//Choose Parents
+		std::vector<Genome> parents(p);
+		for(size_t j = 0u; j < p ; ++j)
+		{
+			size_t randVal = StaticXorShift::GetIntInRange(0, population.size() - 1);
+			parents.push_back(population[randVal]);
+			//Erasing
+			population.erase(population.begin() + randVal);
+		}
+		
+		//Inheritance
+		size_t randVal = StaticXorShift::GetIntInRange(0, 1); 
+		Genome child;
+		if(randVal == 0)
+		{
+			child = Genome::Merge(parents);
+		} else
+		{
+			child = Genome::Combine(parents);
+		}
+
+		randVal = StaticXorShift::GetIntInRange(0, 1);
+		if (randVal == 0)
+		{	
+			//Mutate Child
+			child = Genome::MutateOnePlusOne(child);
+		}
+	
+		//Add to Population
+		newPop.insert(child);
+	}
+
+	population.clear();
+	population.insert(population.begin(), newPop.begin(), newPop.end());
 	if (u < population.size())
 	{
 		population.erase(population.begin() + u, population.end());
@@ -135,3 +188,4 @@ Genome Population::GetBestGenome()
 {
 	return *population.begin();
 }
+

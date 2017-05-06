@@ -3,22 +3,23 @@
 
 namespace StaticXorShift {
 
-	static unsigned long xs = std::chrono::high_resolution_clock::now().time_since_epoch().count();
-	static unsigned long ys = 0xC0FFEE;
-	static unsigned long zs = 0xDEADBEEF;
+	static unsigned long x = static_cast<unsigned long>(std::chrono::high_resolution_clock::now().time_since_epoch().count());
+	static unsigned long y = 0xC0FFEE;
+	static unsigned long z = 0xDEADBEEF;
+	static unsigned long t = 0;
 
 	static unsigned long GetNumber()
 	{
-		xs ^= xs << 16;
-		xs ^= xs >> 5;
-		xs ^= xs << 1;
+		x ^= x << 16;
+		x ^= x >> 5;
+		x ^= x << 1;
 
-		unsigned long ts = xs;
-		xs = ys;
-		ys = zs;
-		zs = ts ^ xs ^ ys;
+		t = x;
+		x = y;
+		y = z;
+		z = t ^ x ^ y;
 
-		return zs;
+		return z;
 	}
 
 	static int GetIntInRange(int min, int max)

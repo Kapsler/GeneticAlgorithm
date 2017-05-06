@@ -24,6 +24,9 @@ public:
 	//(mü,lambda)
 	void EvolveMuCommaLambda(unsigned int u, unsigned int l);
 
+	//(mü/p#lambda)
+	void EvolveMuByPHashLambda(unsigned int u, unsigned int l, unsigned int p);
+
 
 
 	//Debug Stuff

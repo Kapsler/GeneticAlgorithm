@@ -1,6 +1,7 @@
 #pragma once
 #include <cmath>
 #include <cstdio>
+#include <vector>
 
 namespace genomeGlobals
 {
@@ -23,6 +24,8 @@ public:
 	static const int CheckFitness(Genome toCheck);
 	static const void PrintGenome(Genome toPrint);
 	static const Genome MutateOnePlusOne(const Genome& parent);
+	static const Genome Merge(std::vector<Genome> parents);
+	static const Genome Combine(std::vector<Genome> parents);
 
 	int genome[4];
 	int fitness;
