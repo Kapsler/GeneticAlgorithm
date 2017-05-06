@@ -56,20 +56,21 @@ void Population::EvolveMuPlusLambda(unsigned int u, unsigned int l)
 
 		Genome* child = parent->MutateOnePlusOne();
 
-		newPop.insert(parent);
+		//Add new Child
 		newPop.insert(child);
 	}
+	//Add Parents
+	newPop.insert(tmpPop.begin(), tmpPop.end());
 
 	population.clear();
 	population.insert(population.begin(), newPop.begin(), newPop.end());
 	
 	if(u < population.size())
 	{
-		//TODO Delete Dangling Poiners!
-		/*for(size_t i = u; i < population.size(); ++i)
+		for(size_t i = u; i < population.size(); ++i)
 		{
 			delete population[i];
-		}*/
+		}
 		population.erase(population.begin() + u, population.end());
 	}
 }
@@ -96,21 +97,18 @@ void Population::EvolveMuCommaLambda(unsigned u, unsigned l)
 		//Mutate Child
 		Genome* child = parent->MutateOnePlusOne();
 
-		//Add to Population
+		//Add new Child to Population
 		newPop.insert(child);
-		//TODO Delete Dangling Poiners!
-		//delete parent;
 	}
 
 	population.clear();
 	population.insert(population.begin(), newPop.begin(), newPop.end());
 	if (u < population.size())
 	{
-		//TODO Delete Dangling Poiners!
-		 /*for(size_t i = u; i < population.size(); ++i)
+		 for(size_t i = u; i < population.size(); ++i)
 		 {
 			delete population[i];
-		 }*/
+		 }
 		population.erase(population.begin() + u, population.end());
 	}
 }
@@ -154,23 +152,25 @@ void Population::EvolveMuByPHashLambda(unsigned u, unsigned l, unsigned p)
 		if (randVal == 0)
 		{	
 			//Mutate Child
+			Genome* toDelete = child;
 			child = child->MutateOnePlusOne();
+			delete toDelete;
 		}
 	
-		//Add to Population
+		//Add new Child to Population
 		newPop.insert(child);
-		newPop.insert(parents.begin(), parents.end());
 	}
+	//Add Parents to Population
+	newPop.insert(tmpPop.begin(), tmpPop.end());
 
 	population.clear();
 	population.insert(population.begin(), newPop.begin(), newPop.end());
 	if (u < population.size())
 	{
-		//TODO Delete Dangling Poiners!
-		/*for(size_t i = u; i < population.size(); ++i)
+		for(size_t i = u; i < population.size(); ++i)
 		{
 			delete population[i];
-		}*/
+		}
 		population.erase(population.begin() + u, population.end());
 	}
 }

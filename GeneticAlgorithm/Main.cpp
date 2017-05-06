@@ -40,7 +40,7 @@ void main()
 		//p.EvolveOnePlusOne();
 		//p.EvolveMuPlusLambda(config::ParentCount, config::ChildCount);
 		//p.EvolveMuCommaLambda(config::ParentCount, config::ChildCount);
-		p.EvolveMuByPHashLambda(config::ParentCount, config::ChildCount, 3);
+		p.EvolveMuByPHashLambda(config::ParentCount, config::ChildCount, 2);
 	}
 
 	p.PrintBestFitness();
