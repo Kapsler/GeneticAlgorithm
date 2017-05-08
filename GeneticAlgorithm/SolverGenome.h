@@ -18,7 +18,6 @@ public:
 		return (lhs->fitness < rhs->fitness);
 	}
 
-	SolverGenome();
 	SolverGenome(int x, int y, int a, int b);
 	
 	virtual const int CheckFitness() override;
@@ -30,5 +29,6 @@ public:
 	int genome[4];
 
 private:
+	SolverGenome();
 
 };							

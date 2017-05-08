@@ -5,7 +5,7 @@ class Genome
 {
 public:
 	Genome(){};
-	~Genome(){};
+	virtual ~Genome(){};
 
 	virtual bool operator() (const Genome* lhs, const Genome* rhs) const 
 	{

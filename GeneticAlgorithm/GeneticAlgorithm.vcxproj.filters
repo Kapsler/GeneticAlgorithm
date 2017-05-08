@@ -24,6 +24,9 @@
     <ClCompile Include="SolverGenome.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="QueensGenome.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Population.h">
@@ -36,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Genome.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QueensGenome.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

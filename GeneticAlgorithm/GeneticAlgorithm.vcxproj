@@ -139,12 +139,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="QueensGenome.cpp" />
     <ClCompile Include="SolverGenome.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Population.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Genome.h" />
+    <ClInclude Include="QueensGenome.h" />
     <ClInclude Include="SolverGenome.h" />
     <ClInclude Include="Population.h" />
     <ClInclude Include="StaticXORShift.h" />

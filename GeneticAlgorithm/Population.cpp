@@ -101,6 +101,11 @@ void Population::EvolveMuCommaLambda(unsigned u, unsigned l)
 		newPop.insert(child);
 	}
 
+	for (size_t i = u; i < tmpPop.size(); ++i)
+	{
+		delete tmpPop[i];
+	}
+
 	population.clear();
 	population.insert(population.begin(), newPop.begin(), newPop.end());
 	if (u < population.size())
