@@ -84,7 +84,7 @@ Genome* QueensGenome::MutateOnePlusOne() const
 
 	for (int i = 0; i < queenCount; ++i)
 	{
-		child->genome[i] += StaticXorShift::GetIntInRange(0 - genome[i] / 2, ((queenCount - 1) - genome[i]) / 2);
+		child->genome[i] += StaticXorShift::GetIntInRange(0 - genome[i], ((queenCount - 1) - genome[i]));
 	}
 	
 	child->fitness = child->CheckFitness();
@@ -94,33 +94,47 @@ Genome* QueensGenome::MutateOnePlusOne() const
 
 Genome* QueensGenome::Merge(std::vector<Genome*>& parents) const
 {
-	QueensGenome* child = new QueensGenome(*this);
+	//QueensGenome* child = new QueensGenome(*this);
 
-	for (int i = 0; i < queenCount; ++i)
-	{
-		int mergedY = 0;
+	//for (int i = 0; i < queenCount; ++i)
+	//{
+	//	int mergedY = 0;
 
-		for (Genome* p : parents)
-		{
-			QueensGenome* temp = static_cast<QueensGenome*>(p);
-			mergedY += temp->genome[i];
-		}
+	//	for (Genome* p : parents)
+	//	{
+	//		QueensGenome* temp = static_cast<QueensGenome*>(p);
+	//		mergedY += temp->genome[i];
+	//	}
 
-		child->genome[i] = mergedY / static_cast<int>(parents.size());
-	}
+	//	child->genome[i] = mergedY / static_cast<int>(parents.size());
+	//}
 
-	child->fitness = child->CheckFitness();
+	//child->fitness = child->CheckFitness();
 
-	return child;
+	//return child;
+
+	return Combine(parents);
 }
 
 Genome* QueensGenome::Combine(std::vector<Genome*>& parents) const
 {
 	QueensGenome* child = new QueensGenome(*this);
 
+	//One Point Crossover (First and Last Parent)
+	int randVal = StaticXorShift::GetIntInRange(0, queenCount - 1);
+
 	for (size_t i = 0; i < queenCount; ++i)
 	{
-		QueensGenome* temp = static_cast<QueensGenome*>(parents[i%parents.size()]);
+		QueensGenome* temp;
+
+		if(i <= randVal)
+		{
+			temp = static_cast<QueensGenome*>(parents[0]);
+		} else
+		{
+			temp = static_cast<QueensGenome*>(parents[parents.size()-1]);
+		}
+		
 		child->genome[i] = temp->genome[i];
 	}
 	child->fitness = child->CheckFitness();

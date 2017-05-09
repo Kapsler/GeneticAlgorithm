@@ -27,5 +27,8 @@ namespace StaticXorShift {
 		return min + (GetNumber() % static_cast<int>(max - min + 1));
 	}
 
-
+	static float GetZeroToOne()
+	{
+		return GetNumber() / (ULONG_MAX + 1.0f);
+	}
 };

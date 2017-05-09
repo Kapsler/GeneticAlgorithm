@@ -6,6 +6,7 @@
 #include <set>
 #include "Genome.h"
 #include <functional>
+#include <unordered_map>
 
 namespace PopulationGlobals
 {
@@ -29,6 +30,8 @@ public:
 	//(mü/p#lambda)
 	void EvolveMuByPHashLambda(unsigned int u, unsigned int l, unsigned int p);
 
+	//Genetic Stuff
+	void GeneticStuff(unsigned int u, unsigned int l, unsigned int p);
 
 
 	//Debug Stuff
@@ -40,5 +43,6 @@ public:
 private:
 
 	std::vector<Genome*> population;
+	std::unordered_multimap<Genome*, int> altersheim;
 
 };

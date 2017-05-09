@@ -1,17 +1,16 @@
 #include <cstdio>
 #include "Population.h"
 #include "StaticXORShift.h"
-#include <bitset>
 #include "QueensGenome.h"
 
 namespace config
 {
-	static const unsigned int MaxGenerations = 10000;
+	static const unsigned int MaxGenerations = 100000;
 	static const unsigned int ParentCount = 1000;
-	static const unsigned int ChildCount = ParentCount * 2;
+	static const unsigned int ChildCount = ParentCount * 5;
 }
 
-int WarumUpRNG()
+unsigned long WarumUpRNG()
 {
 	int result = 0;
 
@@ -25,22 +24,15 @@ int WarumUpRNG()
 
 void main()
 {
-	printf("Warumup: %d\n\r", WarumUpRNG());
+	printf("Warumup: %u\n\r", WarumUpRNG());
 
 	size_t neededIterations = 0;
 	std::vector<Genome*> population;
 	population.reserve(config::ParentCount);
 	for (size_t i = 0u; i < config::ParentCount; ++i)
 	{
-		population.push_back(new QueensGenome(16));
+		population.push_back(new QueensGenome(10));
 	}
-
-	//Genome* q = new QueensGenome(8);
-	//q->PrintGenome();
-	//printf("Fitness: %d\n\r", q->fitness);
-	//q = q->MutateOnePlusOne();
-	//q->PrintGenome();
-	//printf("Fitness: %d\n\r", q->fitness);
 
 	Population p(population, Genome());
 
@@ -57,7 +49,10 @@ void main()
 		//p.EvolveOnePlusOne();
 		//p.EvolveMuPlusLambda(config::ParentCount, config::ChildCount);
 		//p.EvolveMuCommaLambda(config::ParentCount, config::ChildCount);
-		p.EvolveMuByPHashLambda(config::ParentCount, config::ChildCount, 2);
+		//p.EvolveMuByPHashLambda(config::ParentCount, config::ChildCount, 2);
+		p.GeneticStuff(config::ParentCount, config::ChildCount, 4);
+		p.PrintBestFitness();
+		p.GetBestGenome()->PrintGenome();
 	}
 
 	p.PrintBestFitness();

@@ -101,7 +101,7 @@ void Population::EvolveMuCommaLambda(unsigned u, unsigned l)
 		newPop.insert(child);
 	}
 
-	for (size_t i = u; i < tmpPop.size(); ++i)
+	for (size_t i = 0; i < tmpPop.size(); ++i)
 	{
 		delete tmpPop[i];
 	}
@@ -153,7 +153,7 @@ void Population::EvolveMuByPHashLambda(unsigned u, unsigned l, unsigned p)
 			child = parents[0]->Combine(parents);
 		}
 
-		randVal = StaticXorShift::GetIntInRange(0, 1);
+		randVal = StaticXorShift::GetIntInRange(0, 50);
 		if (randVal == 0)
 		{	
 			//Mutate Child
@@ -179,6 +179,86 @@ void Population::EvolveMuByPHashLambda(unsigned u, unsigned l, unsigned p)
 		population.erase(population.begin() + u, population.end());
 	}
 }
+
+void Population::GeneticStuff(unsigned u, unsigned l, unsigned p)
+{
+	std::multiset<Genome*, Genome> newPop;
+	std::vector<Genome*> tmpPop = population;
+
+	
+	for (size_t i = 0; i < l; ++i) 
+	{
+		//Choose Parents
+		std::vector<Genome*> parents;
+		parents.reserve(p);
+
+		//Get Parents based on fitness
+		for (size_t j = 0u; j < p; ++j)
+		{
+			//If all parents were chosen, start anew
+			if (population.size() == 0)
+			{
+				population = tmpPop;
+			}
+
+			for (size_t k = 0; true; ++k)
+			{
+				if (k >= population.size())
+				{
+					k = 0;
+				}
+
+				float randVal = StaticXorShift::GetZeroToOne();
+
+				Genome* potentialParent = population[k];
+
+				if(1.0f / static_cast<float>(potentialParent->fitness) > randVal)
+				{
+					parents.push_back(potentialParent);
+
+					//Erasing
+					population.erase(population.begin() + k);
+					break;
+				}
+			}
+		}
+
+		//Inheritance
+		Genome* child = parents[0]->Combine(parents);
+		
+
+		int randVal = StaticXorShift::GetIntInRange(0, 10);
+		if (randVal == 0)
+		{
+			//Mutate Child
+			Genome* toDelete = child;
+			child = child->MutateOnePlusOne();
+			delete toDelete;
+		}
+
+		//Add new Child to Population
+		newPop.insert(child);
+	}
+	//Add Parents to Population
+	//newPop.insert(tmpPop.begin(), tmpPop.end());
+	//Delete all parents
+	for (size_t i = 0; i < tmpPop.size(); ++i)
+	{
+		delete tmpPop[i];
+	}
+	
+	population.clear();
+	population.insert(population.begin(), newPop.begin(), newPop.end());
+	if (u < population.size())
+	{
+		for (size_t i = u; i < population.size(); ++i)
+		{
+			delete population[i];
+		}
+		population.erase(population.begin() + u, population.end());
+	}
+}
+
 
 void Population::Print()
 {
