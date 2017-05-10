@@ -172,7 +172,7 @@ void Population::EvolveMuByPHashLambda(unsigned u, unsigned l, unsigned p)
 void Population::GeneticStuff(unsigned u, unsigned l, unsigned p)
 {
 	std::multiset<Genome*, Genome> newPop;
-	
+
 	for (size_t i = 0; i < l; ++i) 
 	{
 		//Choose Parents

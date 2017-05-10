@@ -27,7 +27,7 @@
     <ClCompile Include="QueensGenome.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TimerClasscpp.cpp">
+    <ClCompile Include="TimerClass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

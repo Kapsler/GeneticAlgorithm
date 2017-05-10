@@ -1,6 +1,5 @@
 #pragma once
 #include <chrono>
-#include <iomanip>
 using namespace std::chrono;
 
 class TimerClass

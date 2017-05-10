@@ -1,9 +1,5 @@
 #pragma once
 #include <vector>
-#include "SolverGenome.h"
-#include <chrono>
-#include <map>
-#include <set>
 #include "Genome.h"
 #include <functional>
 #include <unordered_map>

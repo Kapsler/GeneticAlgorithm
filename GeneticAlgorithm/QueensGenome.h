@@ -30,5 +30,4 @@ private:
 
 	Genome* OnePointCrossover(std::vector<Genome*>& parents) const;
 	Genome* NPointCrossover(std::vector<Genome*>& parents) const;
-
 };

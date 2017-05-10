@@ -31,7 +31,6 @@ QueensGenome::QueensGenome(const QueensGenome& old)
 	}
 
 	fitness = old.fitness;
-
 }
 
 QueensGenome::~QueensGenome()
