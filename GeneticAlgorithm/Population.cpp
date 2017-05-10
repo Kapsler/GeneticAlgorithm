@@ -185,8 +185,8 @@ void Population::GeneticStuff(unsigned u, unsigned l, unsigned p)
 		//Inheritance
 		Genome* child = parents[0]->Combine(parents);
 
-		int randVal = StaticXorShift::GetIntInRange(0, 0);
-		if (randVal == 0)
+		int randVal = StaticXorShift::GetIntInRange(0, 100);
+		if (randVal < 60)
 		{
 			//Mutate Child
 			Genome* toDelete = child;

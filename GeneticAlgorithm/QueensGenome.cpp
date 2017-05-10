@@ -93,7 +93,6 @@ Genome* QueensGenome::MutateOnePlusOne() const
 		
 	}
 
-
 	child->fitness = child->CheckFitness();
 
 	return child;
@@ -125,6 +124,17 @@ Genome* QueensGenome::Merge(std::vector<Genome*>& parents) const
 
 Genome* QueensGenome::Combine(std::vector<Genome*>& parents) const
 {
+	if(parents.size() <= 2)
+	{
+		return OnePointCrossover(parents);
+	} 
+
+	return NPointCrossover(parents);
+	
+}
+
+Genome* QueensGenome::OnePointCrossover(std::vector<Genome*>& parents) const
+{
 	QueensGenome* child = new QueensGenome(*this);
 
 	int randVal = StaticXorShift::GetIntInRange(0, queenCount - 1);
@@ -134,16 +144,39 @@ Genome* QueensGenome::Combine(std::vector<Genome*>& parents) const
 	{
 		QueensGenome* temp;
 
-		if(i <= randVal)
+		if (i <= randVal)
 		{
 			temp = static_cast<QueensGenome*>(parents[0]);
-		} else
-		{
-			temp = static_cast<QueensGenome*>(parents[parents.size()-1]);
 		}
-		
+		else
+		{
+			temp = static_cast<QueensGenome*>(parents[parents.size() - 1]);
+		}
+
 		child->genome[i] = temp->genome[i];
 	}
+	child->fitness = child->CheckFitness();
+
+	return child;
+}
+
+Genome* QueensGenome::NPointCrossover(std::vector<Genome*>& parents) const
+{
+	QueensGenome* child = new QueensGenome(*this);
+
+
+	//N Point Crossover, dependant on parentcount
+	int GensPerParent = (queenCount / parents.size()) + 1;
+
+
+	for (size_t i = 0; i < queenCount; ++i)
+	{
+		int parentIndex = i / GensPerParent;
+
+		QueensGenome* temp = static_cast<QueensGenome*>(parents[parentIndex]);
+		child->genome[i] = temp->genome[i];
+	}
+
 	child->fitness = child->CheckFitness();
 
 	return child;

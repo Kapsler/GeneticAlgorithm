@@ -31,7 +31,7 @@ void main()
 	population.reserve(config::ParentCount);
 	for (size_t i = 0u; i < config::ParentCount; ++i)
 	{
-		population.push_back(new QueensGenome(64));
+		population.push_back(new QueensGenome(8));
 	}
 
 	Population p(population, Genome());
@@ -50,7 +50,7 @@ void main()
 		//p.EvolveMuPlusLambda(config::ParentCount, config::ChildCount);
 		//p.EvolveMuCommaLambda(config::ParentCount, config::ChildCount);
 		//p.EvolveMuByPHashLambda(config::ParentCount, config::ChildCount, 2);
-		p.GeneticStuff(config::ParentCount, config::ChildCount, 2);
+		p.GeneticStuff(config::ParentCount, config::ChildCount, 4);
 		//p.PrintBestFitness();
 		//p.GetBestGenome()->PrintGenome();
 	}
