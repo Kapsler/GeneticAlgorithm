@@ -128,19 +128,8 @@ void Population::EvolveMuByPHashLambda(unsigned u, unsigned l, unsigned p)
 		//Choose Parents
 		std::vector<Genome*> parents;
 		parents.reserve(p);
-		for(size_t j = 0u; j < p; ++j)
-		{
-			//If all parents were chosen, start anew
-			if (population.size() == 0)
-			{
-				population = tmpPop;
-			}
 
-			size_t randVal = StaticXorShift::GetIntInRange(0, population.size() - 1);
-			parents.push_back(population[randVal]);
-			//Erasing
-			population.erase(population.begin() + randVal);
-		}
+		ChooseRandomParents(parents, p);
 		
 		//Inheritance
 		size_t randVal = StaticXorShift::GetIntInRange(0, 1); 
@@ -184,7 +173,6 @@ void Population::GeneticStuff(unsigned u, unsigned l, unsigned p)
 {
 	std::multiset<Genome*, Genome> newPop;
 	std::vector<Genome*> tmpPop = population;
-
 	
 	for (size_t i = 0; i < l; ++i) 
 	{
@@ -193,35 +181,7 @@ void Population::GeneticStuff(unsigned u, unsigned l, unsigned p)
 		parents.reserve(p);
 
 		//Get Parents based on fitness
-		for (size_t j = 0u; j < p; ++j)
-		{
-			//If all parents were chosen, start anew
-			if (population.size() == 0)
-			{
-				population = tmpPop;
-			}
-
-			for (size_t k = 0; true; ++k)
-			{
-				if (k >= population.size())
-				{
-					k = 0;
-				}
-
-				float randVal = StaticXorShift::GetZeroToOne();
-
-				Genome* potentialParent = population[k];
-
-				if(1.0f / static_cast<float>(potentialParent->fitness) > randVal)
-				{
-					parents.push_back(potentialParent);
-
-					//Erasing
-					population.erase(population.begin() + k);
-					break;
-				}
-			}
-		}
+		ChooseRandomParents(parents, p);
 
 		//Inheritance
 		Genome* child = parents[0]->Combine(parents);
@@ -287,3 +247,57 @@ Genome* Population::GetBestGenome()
 	return *population.begin();
 }
 
+void Population::ChooseParentsBasedOnFitness(std::vector<Genome*>& parents, int parentCount)
+{
+	std::vector<Genome*> tmpPop = population;
+
+	for (size_t j = 0u; j < parentCount; ++j)
+	{
+		//If all parents were chosen, start anew
+		if (tmpPop.size() == 0)
+		{
+			tmpPop = population;
+		}
+
+		for (size_t k = 0; true; ++k)
+		{
+			if (k >= tmpPop.size())
+			{
+				k = 0;
+			}
+
+			float randVal = StaticXorShift::GetZeroToOne();
+
+			Genome* potentialParent = tmpPop[k];
+
+			if (0.5f / static_cast<float>(potentialParent->fitness) > randVal)
+			{
+				parents.push_back(potentialParent);
+
+				//Erasing
+				tmpPop.erase(tmpPop.begin() + k);
+				break;
+			}
+		}
+	}
+}
+
+void Population::ChooseRandomParents(std::vector<Genome*>& parents, int parentCount)
+{
+	std::vector<Genome*> tmpPop = population;
+
+	for (size_t j = 0u; j < parentCount; ++j)
+	{
+		//If all parents were chosen, start anew
+		if (tmpPop.size() == 0)
+		{
+			tmpPop = population;
+		}
+
+		size_t randVal = StaticXorShift::GetIntInRange(0, tmpPop.size() - 1);
+		parents.push_back(tmpPop[randVal]);
+		//Erasing
+		tmpPop.erase(tmpPop.begin() + randVal);
+	}
+
+}

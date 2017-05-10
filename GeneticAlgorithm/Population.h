@@ -45,4 +45,7 @@ private:
 	std::vector<Genome*> population;
 	std::unordered_multimap<Genome*, int> altersheim;
 
+	void ChooseParentsBasedOnFitness(std::vector<Genome*>& parents, int parentCount);
+	void ChooseRandomParents(std::vector<Genome*>& parents, int parentCount);
+
 };
