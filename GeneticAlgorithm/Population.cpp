@@ -172,7 +172,6 @@ void Population::EvolveMuByPHashLambda(unsigned u, unsigned l, unsigned p)
 void Population::GeneticStuff(unsigned u, unsigned l, unsigned p)
 {
 	std::multiset<Genome*, Genome> newPop;
-	std::vector<Genome*> tmpPop = population;
 	
 	for (size_t i = 0; i < l; ++i) 
 	{
@@ -181,13 +180,12 @@ void Population::GeneticStuff(unsigned u, unsigned l, unsigned p)
 		parents.reserve(p);
 
 		//Get Parents based on fitness
-		ChooseRandomParents(parents, p);
+		ChooseParentsBasedOnFitness(parents, p);
 
 		//Inheritance
 		Genome* child = parents[0]->Combine(parents);
-		
 
-		int randVal = StaticXorShift::GetIntInRange(0, 10);
+		int randVal = StaticXorShift::GetIntInRange(0, 0);
 		if (randVal == 0)
 		{
 			//Mutate Child
@@ -200,12 +198,12 @@ void Population::GeneticStuff(unsigned u, unsigned l, unsigned p)
 		newPop.insert(child);
 	}
 	//Add Parents to Population
-	//newPop.insert(tmpPop.begin(), tmpPop.end());
+	newPop.insert(population.begin(), population.end());
 	//Delete all parents
-	for (size_t i = 0; i < tmpPop.size(); ++i)
-	{
-		delete tmpPop[i];
-	}
+	//for (size_t i = 0; i < population.size(); ++i)
+	//{
+	//	delete population[i];
+	//}
 	
 	population.clear();
 	population.insert(population.begin(), newPop.begin(), newPop.end());
@@ -249,36 +247,21 @@ Genome* Population::GetBestGenome()
 
 void Population::ChooseParentsBasedOnFitness(std::vector<Genome*>& parents, int parentCount)
 {
-	std::vector<Genome*> tmpPop = population;
+	std::vector<Genome*> tmpPop;
+	tmpPop.insert(tmpPop.begin(), population.begin(), population.begin() + population.size() / 5);
 
 	for (size_t j = 0u; j < parentCount; ++j)
 	{
 		//If all parents were chosen, start anew
 		if (tmpPop.size() == 0)
 		{
-			tmpPop = population;
+			tmpPop.insert(tmpPop.begin(), population.begin(), population.begin() + population.size() / 5);
 		}
 
-		for (size_t k = 0; true; ++k)
-		{
-			if (k >= tmpPop.size())
-			{
-				k = 0;
-			}
+		int randVal = StaticXorShift::GetIntInRange(0, tmpPop.size() - 1);
 
-			float randVal = StaticXorShift::GetZeroToOne();
-
-			Genome* potentialParent = tmpPop[k];
-
-			if (0.5f / static_cast<float>(potentialParent->fitness) > randVal)
-			{
-				parents.push_back(potentialParent);
-
-				//Erasing
-				tmpPop.erase(tmpPop.begin() + k);
-				break;
-			}
-		}
+		parents.push_back(tmpPop[randVal]);
+		tmpPop.erase(tmpPop.begin() + randVal);
 	}
 }
 

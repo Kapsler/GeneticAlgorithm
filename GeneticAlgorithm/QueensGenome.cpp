@@ -84,9 +84,16 @@ Genome* QueensGenome::MutateOnePlusOne() const
 
 	for (int i = 0; i < queenCount; ++i)
 	{
-		child->genome[i] += StaticXorShift::GetIntInRange(0 - genome[i], ((queenCount - 1) - genome[i]));
-	}
+		int randVal = StaticXorShift::GetIntInRange(0, queenCount);
 	
+		if(randVal == 0)
+		{
+			child->genome[i] += StaticXorShift::GetIntInRange(0 - genome[i], ((queenCount - 1) - genome[i]));
+		}
+		
+	}
+
+
 	child->fitness = child->CheckFitness();
 
 	return child;
@@ -120,9 +127,9 @@ Genome* QueensGenome::Combine(std::vector<Genome*>& parents) const
 {
 	QueensGenome* child = new QueensGenome(*this);
 
-	//One Point Crossover (First and Last Parent)
 	int randVal = StaticXorShift::GetIntInRange(0, queenCount - 1);
 
+	//One Point Crossover (First and Last Parent from List)
 	for (size_t i = 0; i < queenCount; ++i)
 	{
 		QueensGenome* temp;

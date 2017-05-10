@@ -5,7 +5,7 @@
 
 namespace config
 {
-	static const unsigned int MaxGenerations = 100000;
+	static const unsigned int MaxGenerations = 10000000;
 	static const unsigned int ParentCount = 1000;
 	static const unsigned int ChildCount = ParentCount * 2;
 }
@@ -31,7 +31,7 @@ void main()
 	population.reserve(config::ParentCount);
 	for (size_t i = 0u; i < config::ParentCount; ++i)
 	{
-		population.push_back(new QueensGenome(16));
+		population.push_back(new QueensGenome(64));
 	}
 
 	Population p(population, Genome());
@@ -51,8 +51,8 @@ void main()
 		//p.EvolveMuCommaLambda(config::ParentCount, config::ChildCount);
 		//p.EvolveMuByPHashLambda(config::ParentCount, config::ChildCount, 2);
 		p.GeneticStuff(config::ParentCount, config::ChildCount, 2);
-		p.PrintBestFitness();
-		p.GetBestGenome()->PrintGenome();
+		//p.PrintBestFitness();
+		//p.GetBestGenome()->PrintGenome();
 	}
 
 	p.PrintBestFitness();
