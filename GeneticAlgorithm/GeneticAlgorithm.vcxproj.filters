@@ -27,6 +27,9 @@
     <ClCompile Include="QueensGenome.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TimerClasscpp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Population.h">
@@ -44,5 +47,11 @@
     <ClInclude Include="QueensGenome.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TimerClass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

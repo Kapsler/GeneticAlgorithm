@@ -217,6 +217,60 @@ void Population::GeneticStuff(unsigned u, unsigned l, unsigned p)
 	}
 }
 
+void Population::GeneticStuffMP(unsigned u, unsigned l, unsigned p)
+{
+	std::multiset<Genome*, Genome> newPop;
+
+	#pragma omp parallel num_threads(8) 
+	{
+		for (size_t i = 0; i < l; ++i)
+		{
+			//Choose Parents
+			std::vector<Genome*> parents;
+			parents.reserve(p);
+
+			//Get Parents based on fitness
+			ChooseParentsBasedOnFitness(parents, p);
+
+			//Inheritance
+			Genome* child = parents[0]->Combine(parents);
+
+			int randVal = StaticXorShift::GetIntInRange(0, 100);
+			if (randVal < 60)
+			{
+				//Mutate Child
+				Genome* toDelete = child;
+				child = child->MutateOnePlusOne();
+				delete toDelete;
+			}
+
+			//Add new Child to Population
+			#pragma omp critical
+			{
+				newPop.insert(child);
+			}
+		}
+	}
+
+	//Add Parents to Population
+	newPop.insert(population.begin(), population.end());
+	//Delete all parents
+	//for (size_t i = 0; i < population.size(); ++i)
+	//{
+	//	delete population[i];
+	//}
+
+	population.clear();
+	population.insert(population.begin(), newPop.begin(), newPop.end());
+	if (u < population.size())
+	{
+		for (size_t i = u; i < population.size(); ++i)
+		{
+			delete population[i];
+		}
+		population.erase(population.begin() + u, population.end());
+	}
+}
 
 void Population::Print()
 {

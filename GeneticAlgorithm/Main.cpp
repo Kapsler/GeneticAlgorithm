@@ -2,6 +2,7 @@
 #include "Population.h"
 #include "StaticXORShift.h"
 #include "QueensGenome.h"
+#include "TimerClass.h"
 
 namespace config
 {
@@ -26,12 +27,14 @@ void main()
 {
 	printf("Warumup: %u\n\r", WarumUpRNG());
 
+
 	size_t neededIterations = 0;
+	double neededTime = 0;
 	std::vector<Genome*> population;
 	population.reserve(config::ParentCount);
 	for (size_t i = 0u; i < config::ParentCount; ++i)
 	{
-		population.push_back(new QueensGenome(8));
+		population.push_back(new QueensGenome(64));
 	}
 
 	Population p(population, Genome());
@@ -39,6 +42,9 @@ void main()
 	p.PrintBestFitness();
 	p.GetBestGenome()->PrintGenome();
 	
+	TimerClass timer;
+	timer.StartTimer();
+
 	for(neededIterations; neededIterations < config::MaxGenerations; ++neededIterations)
 	{
 		if(p.HasFoundSolution())
@@ -50,13 +56,18 @@ void main()
 		//p.EvolveMuPlusLambda(config::ParentCount, config::ChildCount);
 		//p.EvolveMuCommaLambda(config::ParentCount, config::ChildCount);
 		//p.EvolveMuByPHashLambda(config::ParentCount, config::ChildCount, 2);
-		p.GeneticStuff(config::ParentCount, config::ChildCount, 4);
+		//p.GeneticStuff(config::ParentCount, config::ChildCount, 4);
+		p.GeneticStuffMP(config::ParentCount, config::ChildCount, 4);
 		//p.PrintBestFitness();
 		//p.GetBestGenome()->PrintGenome();
 	}
 
+	neededTime = timer.GetTime();
+
 	p.PrintBestFitness();
 	p.GetBestGenome()->PrintGenome();
 	printf("Needed %zd Iterations.\r\n", neededIterations);
+	printf("Needed Seconds: %f\n\r", neededTime);
 
+	static_cast<QueensGenome*>(p.GetBestGenome())->PrintPicture();
 }

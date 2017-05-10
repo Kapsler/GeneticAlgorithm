@@ -3,7 +3,7 @@
 
 QueensGenome::QueensGenome()
 {
-
+	
 }
 
 QueensGenome::QueensGenome(int numberOfQueens)
@@ -131,6 +131,64 @@ Genome* QueensGenome::Combine(std::vector<Genome*>& parents) const
 
 	return NPointCrossover(parents);
 	
+}
+
+void QueensGenome::PrintPicture()
+{
+	sf::Vector2f picSize(1000, 1000);
+
+	sf::RectangleShape square;
+	square.setSize(picSize / static_cast<float>(queenCount));
+	square.setFillColor(sf::Color::Black);
+	square.setPosition(0, 0);
+
+	sf::CircleShape queen;
+	queen.setRadius(square.getSize().x / 2.0f);
+	queen.setFillColor(sf::Color::Red);
+	square.setPosition(0, 0);
+
+	sf::RenderTexture output;
+	output.create(1000, 1000);
+	output.clear(); 
+
+	for (size_t x = 0; x < queenCount; ++x)
+	{
+		for (size_t y = 0; y < queenCount; ++y)
+		{
+			square.setPosition(x * square.getSize().x, y * square.getSize().y);
+			queen.setPosition(x * square.getSize().x, y * square.getSize().y);
+
+			if (square.getFillColor() == sf::Color::White)
+			{
+				square.setFillColor(sf::Color::Black);
+			}
+			else
+			{
+				square.setFillColor(sf::Color::White);
+			}
+
+			output.draw(square);
+
+			if(genome[x] == y)
+			{
+				output.draw(queen);
+			}
+		}
+
+		if (square.getFillColor() == sf::Color::White)
+		{
+			square.setFillColor(sf::Color::Black);
+		}
+		else
+		{
+			square.setFillColor(sf::Color::White);
+		}
+
+	}
+	output.display();
+
+	sf::Image imageToFile = output.getTexture().copyToImage();
+	imageToFile.saveToFile("./output.png");
 }
 
 Genome* QueensGenome::OnePointCrossover(std::vector<Genome*>& parents) const

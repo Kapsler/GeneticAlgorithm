@@ -48,7 +48,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -101,6 +101,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <OpenMPSupport>true</OpenMPSupport>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -133,6 +134,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <CallingConvention>FastCall</CallingConvention>
+      <OpenMPSupport>true</OpenMPSupport>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -145,6 +147,7 @@
     <ClCompile Include="SolverGenome.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Population.cpp" />
+    <ClCompile Include="TimerClasscpp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Genome.h" />
@@ -152,8 +155,29 @@
     <ClInclude Include="SolverGenome.h" />
     <ClInclude Include="Population.h" />
     <ClInclude Include="StaticXORShift.h" />
+    <ClInclude Include="TimerClass.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\sfml-system.redist.2.4.0.0\build\native\sfml-system.redist.targets" Condition="Exists('..\packages\sfml-system.redist.2.4.0.0\build\native\sfml-system.redist.targets')" />
+    <Import Project="..\packages\sfml-system.2.4.0.0\build\native\sfml-system.targets" Condition="Exists('..\packages\sfml-system.2.4.0.0\build\native\sfml-system.targets')" />
+    <Import Project="..\packages\sfml-window.redist.2.4.0.0\build\native\sfml-window.redist.targets" Condition="Exists('..\packages\sfml-window.redist.2.4.0.0\build\native\sfml-window.redist.targets')" />
+    <Import Project="..\packages\sfml-graphics.redist.2.4.0.0\build\native\sfml-graphics.redist.targets" Condition="Exists('..\packages\sfml-graphics.redist.2.4.0.0\build\native\sfml-graphics.redist.targets')" />
+    <Import Project="..\packages\sfml-window.2.4.0.0\build\native\sfml-window.targets" Condition="Exists('..\packages\sfml-window.2.4.0.0\build\native\sfml-window.targets')" />
+    <Import Project="..\packages\sfml-graphics.2.4.0.0\build\native\sfml-graphics.targets" Condition="Exists('..\packages\sfml-graphics.2.4.0.0\build\native\sfml-graphics.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\sfml-system.redist.2.4.0.0\build\native\sfml-system.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sfml-system.redist.2.4.0.0\build\native\sfml-system.redist.targets'))" />
+    <Error Condition="!Exists('..\packages\sfml-system.2.4.0.0\build\native\sfml-system.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sfml-system.2.4.0.0\build\native\sfml-system.targets'))" />
+    <Error Condition="!Exists('..\packages\sfml-window.redist.2.4.0.0\build\native\sfml-window.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sfml-window.redist.2.4.0.0\build\native\sfml-window.redist.targets'))" />
+    <Error Condition="!Exists('..\packages\sfml-graphics.redist.2.4.0.0\build\native\sfml-graphics.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sfml-graphics.redist.2.4.0.0\build\native\sfml-graphics.redist.targets'))" />
+    <Error Condition="!Exists('..\packages\sfml-window.2.4.0.0\build\native\sfml-window.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sfml-window.2.4.0.0\build\native\sfml-window.targets'))" />
+    <Error Condition="!Exists('..\packages\sfml-graphics.2.4.0.0\build\native\sfml-graphics.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sfml-graphics.2.4.0.0\build\native\sfml-graphics.targets'))" />
+  </Target>
 </Project>

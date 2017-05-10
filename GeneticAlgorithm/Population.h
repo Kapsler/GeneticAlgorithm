@@ -32,6 +32,7 @@ public:
 
 	//Genetic Stuff
 	void GeneticStuff(unsigned int u, unsigned int l, unsigned int p);
+	void GeneticStuffMP(unsigned int u, unsigned int l, unsigned int p);
 
 
 	//Debug Stuff
