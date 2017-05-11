@@ -66,7 +66,7 @@ const int QueensGenome::CheckFitness()
 
 const void QueensGenome::PrintGenome()
 {
-	printf("(<");
+	printf("Genome: (<");
 		
 	for(int i = 0; i < queenCount-1; ++i)
 	{

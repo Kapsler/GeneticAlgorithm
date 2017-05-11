@@ -171,7 +171,7 @@ void Population::EvolveMuByPHashLambda(unsigned u, unsigned l, unsigned p)
 
 void Population::GeneticStuff(unsigned u, unsigned l, unsigned p)
 {
-	std::multiset<Genome*, Genome> newPop;
+	std::vector<Genome*> newPop;
 
 	for (size_t i = 0; i < l; ++i) 
 	{
@@ -195,10 +195,10 @@ void Population::GeneticStuff(unsigned u, unsigned l, unsigned p)
 		}
 
 		//Add new Child to Population
-		newPop.insert(child);
+		newPop.push_back(child);
 	}
 	//Add Parents to Population
-	newPop.insert(population.begin(), population.end());
+	newPop.insert(newPop.begin(), population.begin(), population.end());
 	//Delete all parents
 	//for (size_t i = 0; i < population.size(); ++i)
 	//{
@@ -206,7 +206,9 @@ void Population::GeneticStuff(unsigned u, unsigned l, unsigned p)
 	//}
 	
 	population.clear();
+	std::random_shuffle(newPop.begin(), newPop.end());
 	population.insert(population.begin(), newPop.begin(), newPop.end());
+	std::sort(population.begin(), population.end(), Genome());
 	if (u < population.size())
 	{
 		for (size_t i = u; i < population.size(); ++i)
@@ -284,8 +286,7 @@ void Population::Print()
 
 void Population::PrintBestFitness()
 {
-	printf("\n\r### Printing Best Fitness ###\n\r");
-	printf("%d\n\r", (*population.begin())->fitness);
+	printf("\n\rBest Fitness: %d\n\r", (*population.begin())->fitness);
 }
 
 bool Population::HasFoundSolution()

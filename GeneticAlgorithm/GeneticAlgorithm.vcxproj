@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -143,6 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CommandLineParser.cpp" />
     <ClCompile Include="QueensGenome.cpp" />
     <ClCompile Include="SolverGenome.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -150,6 +151,7 @@
     <ClCompile Include="TimerClass.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CommandLineParser.h" />
     <ClInclude Include="Genome.h" />
     <ClInclude Include="QueensGenome.h" />
     <ClInclude Include="SolverGenome.h" />
